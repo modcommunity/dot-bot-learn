@@ -2,13 +2,13 @@
 
 ## Why a separate repository
 
-dot-bot records (stage 1 of its demonstration recorder) and already harvests rides on the motor. What it does not and should not hold is the learning: clustering, percentile folding, and later a small network. That code has heavy dependencies (numerical libraries, a GPU trainer), runs for minutes to hours, and is useless on a game server or in a browser build. Keeping it here keeps the runtime addons small and means a game's dependency list never grows because someone wants better bots.
+dot-bot-record records (the demonstration recorder) and already harvests rides on the motor. What it does not and should not hold is the learning: clustering, percentile folding, and later a small network. That code has heavy dependencies (numerical libraries, a GPU trainer), runs for minutes to hours, and is useless on a game server or in a browser build. Keeping it here keeps the runtime addons small and means a game's dependency list never grows because someone wants better bots.
 
-Note: the recorder is part of dot-bot (`addons/dot_bot/demo/`), not a separate `dot-bot-record` addon. This repository is its offline consumer.
+Note: the recorder is the separate addon dot-bot-record (`addons/dot_bot_record/`, extracted from dot-bot). This repository is its offline consumer.
 
 ## Inputs
 
-All come from dot-bot's recorder, through its stores ([demonstration-recorder](../../dot-bot/docs/demonstration-recorder.md)).
+All come from dot-bot-record's recorder, through its stores ([demonstration-recorder](../../dot-bot-record/docs/demonstration-recorder.md)).
 
 | Input | What |
 | --- | --- |
@@ -81,7 +81,7 @@ All stages read the same export manifest and write the same output files, so a s
 - **Consent and opt-out.** Recording is server-side and announced in the server's rules text; the owner turns it off with `bot_record 0`. A player who asks to be excluded is handled by the host's `include_fn` before an episode exists. Because episodes hold no identifier, an after-the-fact deletion of one person's data is impossible by design, which is why exclusion must happen at recording time and the rules text must say so.
 - **No identifiers in exports.** No name, account id, peer number, address, team roster, chat, voice, or time finer than a day. Positions are movement, not identity; free-text fields do not exist.
 - **Aggregation floors.** A place cell or statistic is exported only past a minimum count, so one person's habit never appears; the floor is a setting in the tool and recorded in the export.
-- **Retention.** Raw episodes are pruned by dot-bot's `prune` when a map version changes; exports are regenerated, not edited.
+- **Retention.** Raw episodes are pruned by dot-bot-record's store `prune` when a map version changes; exports are regenerated, not edited.
 - **A check, not a hope.** A hygiene test scans every export for forbidden keys and for timestamps finer than a day, and fails the tool.
 
 ## Testing without data
@@ -97,6 +97,6 @@ The repository has no recordings and must still be tested.
 
 ## Open questions
 
-- Whether verification (the replay on the motor) stays in dot-bot or moves here as a headless tool; today it is in dot-bot.
+- Decided: verification (the replay on the motor) stays in dot-bot, because bots need it at runtime; this repository only consumes the `verified` flags.
 - Language for the trainers: plain Python with a numerical library, run outside Godot, is the working assumption.
 - Where exports are published (committed beside a map, or delivered with a dot-cloud pack) is a game decision.
