@@ -1,0 +1,21 @@
+# Docs-only repository (no scripts, no project.godot yet): nothing to parse, so the
+# shared check skips the Godot runtime and only verifies the docs are present.
+# Switch godot back on (delete the godot and shell-command inputs) when addons/ lands.
+name: CI
+
+on:
+    push:
+        branches: ['**']
+        paths-ignore:
+            - 'screenshots/**'
+    pull_request:
+    workflow_dispatch:
+
+jobs:
+    validate:
+        uses: modcommunity/dot-ci/.github/workflows/validate.yml@v1
+        with:
+            godot: false
+            shell-command: 'test -s README.md && test -s CLAUDE.md && test -d docs'
+        secrets:
+            DEPS_TOKEN: ${{ secrets.DOT_DEPS_TOKEN }}
