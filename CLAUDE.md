@@ -25,4 +25,4 @@ Read the family [CLAUDE.md](../../CLAUDE.md) first; this file is only what is sp
 
 ## Validating
 
-Not built yet. When code exists: the tools' own unit tests on the synthetic generator, then a round trip (generate, learn, export, load in dot-bot's suite).
+Behaviour-cloning trainer `tools/bc/train.py` (plain numpy; a worktree-local `python3 -m venv .venv && .venv/bin/pip install numpy`): reads a `dotbot-bc` v1 export, writes `.dotmlp` + `.f32` (`dotbot-mlp` v1). `.venv/bin/python tools/bc/train.py --selftest` trains on a synthetic export. Parity with dot-bot's `DotBotMlp`: `tools/bc/parity_make.py <dir>`, then `PARITY_DIR=<dir> godot --headless --path <dot-bot checkout> --script tools/bc/parity.gd` (max abs diff must be under 1e-5). Other tools are not built yet.
