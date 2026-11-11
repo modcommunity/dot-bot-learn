@@ -18,5 +18,6 @@ jobs:
             godot: false
             shell-command: 'test -s README.md && test -s CLAUDE.md && test -d docs'
             efficiency: true
+            hygiene: true
         secrets:
             DEPS_TOKEN: ${{ secrets.DOT_DEPS_TOKEN }}
