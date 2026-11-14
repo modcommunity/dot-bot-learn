@@ -1,5 +1,3 @@
-# dot-bot-learn
-
 Offline learning for [dot-bot](https://github.com/modcommunity/dot-bot). It will read the anonymous episodes that dot-bot's demonstration recorder stored and write plain files that bots load: verified ride routes, navigation hints and tuned bot parameters. It runs outside the game, on a developer machine or a GPU box. Part of the [dot-*](https://github.com/modcommunity) family.
 
 **Status: design only.** Nothing is built yet. [docs/design.md](docs/design.md) is the whole content, and there is nothing to install.
