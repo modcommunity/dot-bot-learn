@@ -13,7 +13,7 @@ on:
 
 jobs:
     validate:
-        uses: modcommunity/dot-ci/.github/workflows/validate.yml@v1
+        uses: gamespice-platform/ci/.github/workflows/validate.yml@v1
         with:
             godot: false
             shell-command: 'test -s README.md && test -s CLAUDE.md && test -d docs'
